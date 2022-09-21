@@ -1,0 +1,70 @@
+<section class="phx-hero">
+  <h1><%= gettext "Welcome to %{name}!", name: "FizzBuzz" %></h1>
+  <p>Peace of mind from 1 to 100,000,000,000 !</p>
+</section>
+
+Page: <%= @pagination.page %> <br>
+Rows per page: <%= @pagination.page_size %> <br>
+FuzzBuzz: <br>
+<table>
+
+<%= for n <- @values  do %>
+<tr><td>
+<%= n %><br>
+</td>
+<td>This is my favorite number</td>
+</tr>
+<% end %>
+</table>
+<%=
+  link("First page", to: Routes.page_path(@conn, :index, page: 1, page_size:  @pagination.page_size ))
+%>
+<%=
+if is_prev_page_valid?(@pagination) do
+  link("Prev page", to: Routes.page_path(@conn, :index, page: @pagination.prev_page , page_size:  @pagination.page_size ))
+end
+%>
+<%=
+if is_next_page_valid?(@pagination) do
+  link("Next page", to: Routes.page_path(@conn, :index, page:  @pagination.next_page , page_size:  @pagination.page_size ))
+end
+%>
+<%=
+  link("Last page", to: Routes.page_path(@conn, :index, page:  @pagination.last_page , page_size:  @pagination.page_size ))
+%>
+<section class="row">
+  <article class="column">
+    <h2>Resources</h2>
+    <ul>
+      <li>
+        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs</a>
+      </li>
+      <li>
+        <a href="https://github.com/phoenixframework/phoenix">Source</a>
+      </li>
+      <li>
+        <a href="https://github.com/phoenixframework/phoenix/blob/v1.6/CHANGELOG.md">v1.6 Changelog</a>
+      </li>
+    </ul>
+  </article>
+  <article class="column">
+    <h2>Help</h2>
+    <ul>
+      <li>
+        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
+      </li>
+      <li>
+        <a href="https://web.libera.chat/#elixir">#elixir on Libera Chat (IRC)</a>
+      </li>
+      <li>
+        <a href="https://twitter.com/elixirphoenix">Twitter @elixirphoenix</a>
+      </li>
+      <li>
+        <a href="https://elixir-slackin.herokuapp.com/">Elixir on Slack</a>
+      </li>
+      <li>
+        <a href="https://discord.gg/elixir">Elixir on Discord</a>
+      </li>
+    </ul>
+  </article>
+</section>
