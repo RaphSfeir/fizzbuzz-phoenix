@@ -16,27 +16,21 @@ defmodule Fizzbuzz do
 
   @doc """
   Public interface to apply Fizz buzz function to an integer.
-  Returns an error for non positive, non zero integers.
+  Raises an error for non positive, non zero integers, hence the !
   """
-  def transform(n) when is_integer(n) and n > 0, do: {:ok, run(n)}
-  def transform(other_values), do: {:error, {:invalid_value, other_values}}
+  def transform!(n) when is_integer(n) and n > 0, do: run(n)
+  def transform!(other_value), do: raise(ArgumentError, message: "Invalid value: #{other_value}")
 
-  def transform!(n) do
-    case transform(n) do
-      {:ok, result} ->
-        result
-
-      {:error, {:invalid_value, value}} ->
-        raise ArgumentError, message: "Invalid value: #{value}"
-    end
-  end
-
+  @doc """
+  Takes a list and returns a list of tuples, {transformed, original}
+  """
   def transform_list(list) when is_list(list),
     do:
       list
       |> Enum.map(fn n -> {n |> transform!(), n} end)
 
-  def transform_list(other_values), do: {:error, {:invalid_list, other_values}}
+  def transform_list(other_values),
+    do: raise(ArgumentError, message: "Invalid value: #{inspect(other_values)}")
 
   defp run(n) when rem(n, 15) == 0, do: "FizzBuzz"
   defp run(n) when rem(n, 5) == 0, do: "Buzz"

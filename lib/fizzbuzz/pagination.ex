@@ -1,5 +1,5 @@
 defmodule Fizzbuzz.Pagination do
-  @accepted_page_size [1, 10, 25, 50, 100, 500]
+  @accepted_page_size [10, 25, 50, 100, 500]
   def page_params_to_range(1, page_size)
       when is_integer(page_size) do
     end_index = min(page_size, Fizzbuzz.get_maximum_value())
@@ -17,6 +17,8 @@ defmodule Fizzbuzz.Pagination do
   def get_last_page_number(page_size) do
     round(Fizzbuzz.get_maximum_value() / page_size)
   end
+
+  def get_accepted_page_size(), do: @accepted_page_size
 
   def validate_page_params(%{"page" => raw_page, "page_size" => raw_page_size} = _raw_page_params) do
     with {:validate_page, {page, _}} <- {:validate_page, Integer.parse(raw_page)},

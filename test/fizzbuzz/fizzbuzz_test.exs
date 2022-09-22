@@ -44,7 +44,7 @@ defmodule FizzbuzzTest do
     "Buzz"
   ]
 
-  describe "Fizzbuzz.transform!" do
+  describe "transform!/1" do
     test "success: apply to small list of integers" do
       assert 1..40
              |> Enum.map(&Fizzbuzz.transform!/1) ==
@@ -54,7 +54,7 @@ defmodule FizzbuzzTest do
     test "success: apply to large list of integers" do
       1..100_000
       |> Enum.map(fn n ->
-        # Second methood verification
+        # Second method verification
         expected_value =
           cond do
             rem(n, 3) == 0 and rem(n, 5) == 0 ->
@@ -80,6 +80,26 @@ defmodule FizzbuzzTest do
       assert_raise(ArgumentError, fn -> Fizzbuzz.transform!(-3) end)
       assert_raise(ArgumentError, fn -> Fizzbuzz.transform!("bonjour") end)
       assert_raise(ArgumentError, fn -> Fizzbuzz.transform!([1]) end)
+    end
+  end
+
+  describe "transform_list/1" do
+    test "success: apply to small list of integers" do
+      expected =
+        1..40
+        |> Enum.to_list()
+        |> Enum.map(fn counter -> {Enum.at(@hardcoded_fizzbuzz, counter - 1), counter} end)
+
+      assert 1..40
+             |> Enum.to_list()
+             |> Fizzbuzz.transform_list() == expected
+    end
+
+    test "fails: invalid value" do
+      assert_raise(ArgumentError, fn -> Fizzbuzz.transform_list(1.1) end)
+      assert_raise(ArgumentError, fn -> Fizzbuzz.transform_list(false) end)
+      assert_raise(ArgumentError, fn -> Fizzbuzz.transform_list(3) end)
+      assert_raise(ArgumentError, fn -> Fizzbuzz.transform_list("bonjour") end)
     end
   end
 end

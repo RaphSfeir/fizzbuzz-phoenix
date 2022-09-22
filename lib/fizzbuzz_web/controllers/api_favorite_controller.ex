@@ -4,7 +4,7 @@ defmodule FizzbuzzWeb.ApiFavoriteController do
   alias Fizzbuzz.Favorites
   alias Fizzbuzz.Favorites.Favorite
 
-  action_fallback FizzbuzzWeb.FallbackController
+  action_fallback FizzbuzzWeb.ApiFallbackController
 
   def index(conn, _params) do
     favorites = Favorites.list_favorites()

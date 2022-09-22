@@ -16,7 +16,7 @@ defmodule FizzbuzzWeb.PageControllerTest do
     assert html_response(conn, 200) =~ "9999900"
     assert html_response(conn, 200) =~ "9999901"
 
-    conn = get(conn, "/", %{page: 30, page_size: 1})
+    conn = get(conn, "/", %{page: 20, page_size: 10})
     assert html_response(conn, 200) =~ "<td>\nFizzBuzz"
   end
 

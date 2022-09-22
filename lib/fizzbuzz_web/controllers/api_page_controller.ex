@@ -1,7 +1,7 @@
 defmodule FizzbuzzWeb.ApiPageController do
   use FizzbuzzWeb, :controller
 
-  action_fallback FizzbuzzWeb.FallbackController
+  action_fallback FizzbuzzWeb.ApiFallbackController
   alias Fizzbuzz.Favorites.Favorite
   alias Fizzbuzz.Pagination
 
@@ -17,6 +17,7 @@ defmodule FizzbuzzWeb.ApiPageController do
             List.last(list_numbers)
           )
           |> Enum.map(&extract_number_from_favorite/1),
+        acceptable_page_sizes: Pagination.get_accepted_page_size(),
         pagination: %{
           page: page,
           page_size: page_size,

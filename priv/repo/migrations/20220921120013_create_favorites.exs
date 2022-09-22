@@ -3,7 +3,7 @@ defmodule Fizzbuzz.Repo.Migrations.CreateFavorites do
 
   def change do
     create table(:favorites) do
-      add :number, :integer
+      add :number, :bigint
 
       timestamps()
     end

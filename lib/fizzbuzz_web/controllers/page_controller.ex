@@ -15,6 +15,7 @@ defmodule FizzbuzzWeb.PageController do
             List.first(list_numbers),
             List.last(list_numbers)
           ),
+        acceptable_page_sizes: Pagination.get_accepted_page_size(),
         pagination: %{
           page: page,
           page_size: page_size,
