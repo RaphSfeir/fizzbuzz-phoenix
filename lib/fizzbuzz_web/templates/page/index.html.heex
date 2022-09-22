@@ -2,17 +2,27 @@
   <h1><%= gettext "Welcome to %{name}!", name: "FizzBuzz" %></h1>
   <p>Peace of mind from 1 to 100,000,000,000 !</p>
 </section>
+<p class="alert alert-info" role="alert"><%= get_flash(@conn, :created_favorite) %></p>
 
 Page: <%= @pagination.page %> <br>
 Rows per page: <%= @pagination.page_size %> <br>
 FuzzBuzz: <br>
 <table>
-
-<%= for n <- @values  do %>
+<%= for {fb_n, n} <- @fizzbuzzed_values do %>
 <tr><td>
+<%= fb_n %><br>
 <%= n %><br>
 </td>
-<td>This is my favorite number</td>
+<td>
+
+<%=
+if is_favorite?(@favorites, n) do
+   button("Unfavorite", method: :post, to: Routes.favorite_path(@conn, :create, unfavorite_number: n, page: @pagination.page, page_size: @pagination.page_size))
+else
+   button("Favorite", method: :post, to: Routes.favorite_path(@conn, :create, favorite_number: n, page: @pagination.page, page_size: @pagination.page_size))
+end
+%>
+</td>
 </tr>
 <% end %>
 </table>

@@ -1,6 +1,7 @@
 defmodule FizzbuzzWeb.FallbackController do
   use FizzbuzzWeb, :controller
   alias FizzbuzzWeb.ErrorView
+  alias FizzbuzzWeb.ChangesetView
 
   def call(conn, {:error, :not_found}) do
     conn
@@ -16,10 +17,17 @@ defmodule FizzbuzzWeb.FallbackController do
     |> render(:"403")
   end
 
+  def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> put_view(ChangesetView)
+    |> render("error.json", changeset: changeset)
+  end
+
   def call(conn, {:validate_page, :error}) do
     conn
-    |> put_status(422)
+    |> put_status(:bad_request)
     |> put_view(ErrorView)
-    |> render(:"422")
+    |> render(:"400")
   end
 end

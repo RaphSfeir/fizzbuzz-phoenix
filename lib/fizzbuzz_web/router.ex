@@ -5,6 +5,7 @@ defmodule FizzbuzzWeb.Router do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
+    plug :fetch_flash
     plug :put_root_layout, {FizzbuzzWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
@@ -18,12 +19,14 @@ defmodule FizzbuzzWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    resources "/favorites", FavoriteController, only: [:create]
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", FizzbuzzWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", FizzbuzzWeb do
+    pipe_through :api
+    get "/", ApiPageController, :index
+    resources "/favorites", ApiFavoriteController, only: [:index, :create, :delete]
+  end
 
   # Enables LiveDashboard only for development
   #

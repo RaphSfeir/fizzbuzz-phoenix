@@ -14,6 +14,6 @@ defmodule Fizzbuzz.Pagination do
   end
 
   def get_last_page_number(page_size) do
-    round(@maximum_value / page_size)
+    round(Fizzbuzz.get_maximum_value() / page_size)
   end
 end

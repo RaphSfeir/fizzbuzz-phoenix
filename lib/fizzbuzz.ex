@@ -34,7 +34,7 @@ defmodule Fizzbuzz do
   def transform_list(list) when is_list(list),
     do:
       list
-      |> Enum.map(&transform!/1)
+      |> Enum.map(fn n -> {n |> transform!(), n} end)
 
   def transform_list(other_values), do: {:error, {:invalid_list, other_values}}
 

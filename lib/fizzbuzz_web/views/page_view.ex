@@ -1,6 +1,12 @@
 defmodule FizzbuzzWeb.PageView do
   use FizzbuzzWeb, :view
 
+  def is_favorite?(favorites, n) do
+    favorites
+    |> Enum.filter(fn %{number: filter_n} -> n == filter_n end)
+    |> Enum.any?()
+  end
+
   def is_prev_page_valid?(%{prev_page: 0, page_size: _page_size}), do: false
   def is_prev_page_valid?(%{prev_page: prev_page}) when prev_page > 0, do: true
 
