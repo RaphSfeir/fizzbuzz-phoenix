@@ -24,10 +24,24 @@ defmodule FizzbuzzWeb.FallbackController do
     |> render("error.json", changeset: changeset)
   end
 
+  def call(conn, {:validate_page_size, false}) do
+    conn
+    |> put_status(:bad_request)
+    |> put_view(ErrorView)
+    |> render("400.html", message: "Invalid Page Size.")
+  end
+
+  def call(conn, {:validate_positive, false}) do
+    conn
+    |> put_status(:bad_request)
+    |> put_view(ErrorView)
+    |> render("400.html", message: "Positive pages only !")
+  end
+
   def call(conn, {:validate_page, :error}) do
     conn
     |> put_status(:bad_request)
     |> put_view(ErrorView)
-    |> render(:"400")
+    |> render("400.html", message: "Invalid pages.")
   end
 end

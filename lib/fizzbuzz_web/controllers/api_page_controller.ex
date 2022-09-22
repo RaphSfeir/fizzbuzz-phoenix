@@ -3,11 +3,11 @@ defmodule FizzbuzzWeb.ApiPageController do
 
   action_fallback FizzbuzzWeb.FallbackController
   alias Fizzbuzz.Favorites.Favorite
+  alias Fizzbuzz.Pagination
 
-  def index(conn, _params = %{"page" => raw_page, "page_size" => raw_page_size}) do
-    with {:validate_page, {page, _}} <- {:validate_page, Integer.parse(raw_page)},
-         {:validate_page, {page_size, _}} <- {:validate_page, Integer.parse(raw_page_size)},
-         list_numbers <- Fizzbuzz.Pagination.page_params_to_range(page, page_size) do
+  def index(conn, params = %{"page" => _raw_page, "page_size" => _raw_page_size}) do
+    with {:ok, %{list_numbers: list_numbers, page: page, page_size: page_size}} <-
+           Pagination.validate_page_params(params) do
       render(conn, "index.json",
         fizzbuzzed_values:
           list_numbers |> Fizzbuzz.transform_list() |> Enum.map(&format_values_json/1),

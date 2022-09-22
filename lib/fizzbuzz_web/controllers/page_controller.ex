@@ -3,20 +3,12 @@ defmodule FizzbuzzWeb.PageController do
 
   action_fallback FizzbuzzWeb.FallbackController
 
+  alias Fizzbuzz.Pagination
+
   def index(conn, params = %{"page" => _raw_page, "page_size" => _raw_page_size}) do
-    render_index(conn, params, "html")
-  end
-
-  def index(conn, _) do
-    conn
-    |> index(%{"page" => "1", "page_size" => "100"})
-  end
-
-  def render_index(conn, _params = %{"page" => raw_page, "page_size" => raw_page_size}, view_type) do
-    with {:validate_page, {page, _}} <- {:validate_page, Integer.parse(raw_page)},
-         {:validate_page, {page_size, _}} <- {:validate_page, Integer.parse(raw_page_size)},
-         list_numbers <- Fizzbuzz.Pagination.page_params_to_range(page, page_size) do
-      render(conn, "index.#{view_type}",
+    with {:ok, %{list_numbers: list_numbers, page: page, page_size: page_size}} <-
+           Pagination.validate_page_params(params) do
+      render(conn, "index.html",
         fizzbuzzed_values: list_numbers |> Fizzbuzz.transform_list(),
         favorites:
           Fizzbuzz.Favorites.list_favorites_in_range(
@@ -32,5 +24,10 @@ defmodule FizzbuzzWeb.PageController do
         }
       )
     end
+  end
+
+  def index(conn, _) do
+    conn
+    |> index(%{"page" => "1", "page_size" => "100"})
   end
 end
