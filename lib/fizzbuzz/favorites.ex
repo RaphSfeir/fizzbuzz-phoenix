@@ -21,6 +21,15 @@ defmodule Fizzbuzz.Favorites do
     Repo.all(Favorite)
   end
 
+  @doc """
+  Returns the list of favorites in a specific range of numbers.
+
+  ## Examples
+
+      iex> list_favorites(0, 1000)
+      [%Favorite{}, ...]
+
+  """
   def list_favorites_in_range(min, max),
     do:
       Repo.all(
