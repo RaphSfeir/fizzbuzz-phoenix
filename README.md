@@ -1,5 +1,12 @@
 # Fizzbuzz
 
+## Requirements
+  
+  * Elixir 1.12+
+  * Persistancy is dealt using MySQL.
+
+## Get started
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
@@ -8,12 +15,10 @@ To start your Phoenix server:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+## Files to consider
 
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+  * `fizzbuzz/pagination.ex` Deals with the pagination logic.
+  * `fizzbuzz.ex` is where the FizzBuzz business logic is located. 
+  * `favorites/favorite.ex` is the context for the Favorites entities. 
+  * All tests are written in the `test/` directory.
+  * Controllers were duplicated for the API pipeline as the data treatment differs when rendering output.
