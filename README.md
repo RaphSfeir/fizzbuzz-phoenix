@@ -22,3 +22,26 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
   * `favorites/favorite.ex` is the context for the Favorites entities. 
   * All tests are written in the `test/` directory.
   * Controllers were duplicated for the API pipeline as the data treatment differs when rendering output.
+
+## API Usage
+All HTTP API requests should use the standard header: `{"Content-Type": "application/json"}`
+### List
+```
+GET /api?page=$page_number&page_size=$page_size
+```
+With `$page_number` a positive integer, and `$page size` a valid page size. 
+
+### Favorite
+```
+POST /api/favorites
+Request Body: {
+    favorite: {
+      number: number
+    }
+}
+```
+
+### Unfavorite
+```
+DELETE /api/favorites/$favorite_number
+```
