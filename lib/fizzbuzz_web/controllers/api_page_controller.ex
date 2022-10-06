@@ -3,6 +3,7 @@ defmodule FizzbuzzWeb.ApiPageController do
 
   action_fallback FizzbuzzWeb.ApiFallbackController
   alias Fizzbuzz.Favorites.Favorite
+  alias Fizzbuzz.Favorites
   alias Fizzbuzz.Pagination
 
   def index(conn, params = %{"page" => _raw_page, "page_size" => _raw_page_size}) do
@@ -12,7 +13,7 @@ defmodule FizzbuzzWeb.ApiPageController do
         fizzbuzzed_values:
           list_numbers |> Fizzbuzz.transform_list() |> Enum.map(&format_values_json/1),
         favorites:
-          Fizzbuzz.Favorites.list_favorites_in_range(
+          Favorites.list_favorites_in_range(
             List.first(list_numbers),
             List.last(list_numbers)
           )

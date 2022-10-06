@@ -34,6 +34,9 @@ end
 <%= for {fb_n, n} <- @fizzbuzzed_values do %>
 <tr><td>
 <div style="font-size: 10px">#<%= n %></div>
+<%= if is_favorite?(@favorites, n) do %>
+★
+<% end %>
 </td>
 <td>
 <%= fb_n %>
